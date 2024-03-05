@@ -1,66 +1,61 @@
-## Foundry
+FundMe README
+Overview
+Welcome to FundMe, a decentralized crowdfunding platform built on the Ethereum blockchain! This README provides essential information on deploying, testing, and interacting with the FundMe smart contract.
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Usage
+Deployment
+To deploy FundMe, execute the following command:
+forge script script/DeployFundMe.s.sol
 
-Foundry consists of:
+Testing
+FundMe testing is divided into four tiers: Unit, Integration, Forked, and Staging. This repository covers Unit and Forked tests.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+To run tests:forge test
 
-## Documentation
+or to run a specific test function:
+forge test --match-test testFunctionName
+or to run tests using a forked testnet:
+forge test --fork-url $SEPOLIA_RPC_URL
 
-https://book.getfoundry.sh/
+Test Coverage
+To generate test coverage report:
+forge coverage
+Deployment to Testnet or Mainnet
+Setup Environment Variables
+Before deployment, set the following environment variables in a .env file:
 
-## Usage
+PRIVATE_KEY: Your account's private key (from Metamask)
+SEPOLIA_RPC_URL: URL of the Sepolia testnet node
+Optionally, ETHERSCAN_API_KEY for contract verification on Etherscan
+Deploy
+Deploy FundMe to a testnet or mainnet using:
 
-### Build
+forge script script/DeployFundMe.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY
+Scripts
 
-```shell
-$ forge build
-```
+After deployment, interact with the deployed contract using scripts:
 
-### Test
+cast send <FUNDME_CONTRACT_ADDRESS> "fund()" --value 0.1ether --private-key <PRIVATE_KEY>
 
-```shell
-$ forge test
-```
+or execute a script:
+forge script script/Interactions.s.sol --rpc-url sepolia  --private-key $PRIVATE_KEY  --broadcast
 
-### Format
+Withdraw
 
-```shell
-$ forge fmt
-```
+Withdraw funds from FundMe contract:
+cast send <FUNDME_CONTRACT_ADDRESS> "withdraw()"  --private-key <PRIVATE_KEY>
 
-### Gas Snapshots
+Estimate Gas
 
-```shell
-$ forge snapshot
-```
+To estimate gas costs:
+forge snapshot
+This generates a .gas-snapshot output file.
 
-### Anvil
+Formatting
 
-```shell
-$ anvil
-```
+To format code:
+forge fmt
 
-### Deploy
+Thank You!
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Thank you for using FundMe. Happy crowdfunding on the Ethereum blockchain! 🚀
